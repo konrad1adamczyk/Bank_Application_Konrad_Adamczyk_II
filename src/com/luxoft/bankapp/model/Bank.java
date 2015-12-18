@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.luxoft.bankapp.ecxeptions.ClientExistsException;
 import com.luxoft.bankapp.listeners.ClientRegistrationListener;
-import com.luxoft.bankapp.service.Report;
 
 public class Bank implements Report
 {

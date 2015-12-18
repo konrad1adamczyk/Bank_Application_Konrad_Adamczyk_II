@@ -2,9 +2,6 @@ package com.luxoft.bankapp.model;
 
 import java.util.*;
 
-import com.luxoft.bankapp.service.Gender;
-import com.luxoft.bankapp.service.Report;
-
 public class Client implements Report
 {
 	private Gender gender;

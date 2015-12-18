@@ -1,7 +1,5 @@
 package com.luxoft.bankapp.model;
 
-import com.luxoft.bankapp.service.Report;
-
 import com.luxoft.bankapp.ecxeptions.BankException;
 
 public interface Account extends Report{
