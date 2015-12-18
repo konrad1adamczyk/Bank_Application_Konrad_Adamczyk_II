@@ -2,7 +2,6 @@ package com.luxoft.bankapp.service;
 
 import com.luxoft.bankapp.ecxeptions.ClientExistsException;
 import com.luxoft.bankapp.model.Account;
-import com.luxoft.bankapp.model.Account;
 import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.model.Client;
 
@@ -25,7 +24,7 @@ public class BankServiceImpl implements BankService
 	@Override
 	public void addAccount(Client client, Account account)
 	{
-		client.getListOfAccounts().add((Account) account);
+		client.addAccountToClient(account);
 
 	}
 
@@ -39,8 +38,7 @@ public class BankServiceImpl implements BankService
 	@Override
 	public void removeClientByIndex(Bank bank, int index)
 	{
-		bank.getListOfClients().remove(index);
-		
+		bank.removeClientByIndex(index);
 	}
 
 }

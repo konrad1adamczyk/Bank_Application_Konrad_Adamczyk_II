@@ -59,19 +59,20 @@ public class Client implements Report
 		this.initialOverdraft = initialOverdraft;
 	}
 
-	public void setActiveAccont(Account activeAccont)
+	public void setActiveAccont(Account accont)
 	{
-		this.activeAccont = activeAccont;
+		this.activeAccont = accont;
 	}
+
+//	************************************************************
+	public void addAccountToClient(Account account){
+		listOfAccounts.add(account);
+	}
+
 
 	public List<Account> getListOfAccounts()
 	{
 		return Collections.unmodifiableList(listOfAccounts);
-	}
-
-	public void addAccount(Account account1)
-	{
-		listOfAccounts.add(account1);
 	}
 
 	public String getClientSalutation()
@@ -87,9 +88,6 @@ public class Client implements Report
 		 System.out.print("\n" + getClientSalutation() + " " + firstname + " " + surname + "\n" );
 		 listOfAccounts.forEach(account -> account.printReport());
 
-		 
-//		 po co %20s%6.2f\n   i %s%s\n????????????????
-		 
 	}
 
 
