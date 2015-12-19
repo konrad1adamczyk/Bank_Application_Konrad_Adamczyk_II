@@ -4,7 +4,7 @@ import com.luxoft.bankapp.ecxeptions.BankException;
 
 public abstract class AbstractAccount implements Account
 {
-
+	private float overdraft;
 	private float balance;
 	protected String accountNumber;
 
@@ -20,14 +20,19 @@ public abstract class AbstractAccount implements Account
 		this.accountNumber = accountNumber;
 	}
 
-	public float getBalance()
-	{
+	public float getBalance() {
 		return balance;
 	}
-
-	public void setBalance(float balance)
-	{
+	public void setBalance(float balance) {
 		this.balance = balance;
+	}
+
+	public float getOverdraft() {
+		return overdraft;
+	}
+
+	public void setOverdraft(float overdraft) {
+		this.overdraft = overdraft;
 	}
 
 	public String getAccountNumber()

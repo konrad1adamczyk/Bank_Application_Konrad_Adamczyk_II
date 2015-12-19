@@ -19,20 +19,5 @@ public class CheckingAccount extends AbstractAccount
         return "Checking Account have balance: " + getBalance() + " and overdraft: " + getOverdraft();
     }
 
-	public float getOverdraft() {
-		return overdraft;
-	}
-	public void setOverdraft(float overdraft)
-	{
-		this.overdraft = overdraft;
-	}
-
-	public float getBalance() {
-		return balance;
-	}
-	public void setBalance(float balance)
-	{
-		this.balance = balance;
-	}
 
 }

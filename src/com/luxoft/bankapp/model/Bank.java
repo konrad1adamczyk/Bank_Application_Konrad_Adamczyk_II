@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.luxoft.bankapp.ecxeptions.ClientExistsException;
+import com.luxoft.bankapp.ecxeptions.ClientNotExistsException;
 import com.luxoft.bankapp.listeners.ClientRegistrationListener;
 
 public class Bank implements Report
@@ -23,14 +24,14 @@ public class Bank implements Report
 
 			@Override
 			public void onClientAdded(Client client) {
-				System.out.println(client.getClientSalutation() + " " + client.getSurname()+ " " + client.getFirstname() + " is our new client" );
+				System.out.println(client.getClientSalutation() + " " + client.getName() + " is our new client" );
 			}
 		}
 		class EmailNotificationListener implements ClientRegistrationListener {
 
 			@Override
 			public void onClientAdded(Client client) {
-				System.out.println("Notification email for client " + client.getSurname() +" " + client.getFirstname() + " to be sent" );
+				System.out.println("Notification email for client " + client.getName() + " to be sent" );
 			}
 		}
 
@@ -38,7 +39,7 @@ public class Bank implements Report
 
 			@Override
 			public void onClientAdded(Client client) {
-				System.out.println(client.getFirstname() + " " + new GregorianCalendar().getTime() );
+				System.out.println(client.getName() + " " + new GregorianCalendar().getTime() );
 			}
 		}
 
@@ -54,16 +55,25 @@ public class Bank implements Report
 		eventListeners.add(listner);
 	}
 
-	public Client getClient(String firstname,String surname) {
-		for(Client client : listOfClients)
-			if(client.getFirstname().equals(firstname) && client.getSurname().equals(surname) )
-				return client;
-		return null;
+	public Client getClient(String name) throws ClientNotExistsException {
+		Client searchedClient = null;
+		for (Client client : listOfClients){
+			if(client.getName().equals(name)  )
+				searchedClient = client;
+		}
+		if ( searchedClient == null ) throw new ClientNotExistsException(name);
+		return searchedClient;
 	}
 
-	public void addClient(Client client) throws ClientExistsException {
-		if(getClient(client.getFirstname(), client.getSurname()) != null)
+	public void addClient(Client client) throws ClientExistsException  {
+		Client searchedClient = null;
+		for (Client client1 : listOfClients){
+			if(client1.getName().equals(client.getName())  )
+				searchedClient = client;
+		}
+		if(searchedClient != null)
 			throw new ClientExistsException("This client already exists");
+
 		listOfClients.add(client);
 		for(ClientRegistrationListener registration : eventListeners){
 			registration.onClientAdded(client);

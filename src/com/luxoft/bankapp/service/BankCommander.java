@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.luxoft.bankapp.service.BankApplication.*;
+
 /**
  * Created by KAdamczyk on 2015-12-18.
  */
@@ -17,22 +19,24 @@ public class BankCommander {
     public static Client currentClient;
 
     static Command[] commands = {
-            new AddClientCommand(), // 1
-            new FindClientCommand(), // 2
-            new OpenAccountCommand(), // 3
-            new CloseAccountCommand(), // 4
-            new GetAccountsCommand(), // 5
-            new SetActiveAccountCommand(), // 6
+            new AddClientCommand(), // 0    ***************
+            new FindClientCommand(), // 1   ***************
+            new OpenAccountCommand(), // 2  ***************
+            new CloseAccountCommand(), // 3
+            new GetAccountsCommand(), // 4  ***************
+            new SetActiveAccountCommand(), // 5 ***************
 
-            new DepositCommand(), // 7
-            new WithdrawCommand(), // 8
-            new TransferCommand(), // 9
+            new DepositCommand(), // 6
+            new WithdrawCommand(), // 7
+            new TransferCommand(), // 8
 
-            new Command() { // 10 - Exit Command
+            new Command() { // 9 - Exit Command
+                @Override
                 public void execute() {
                     System.out.println("Closing the program!");
                     System.exit(0);
                 }
+                @Override
                 public void printCommandInfo() {
                     System.out.println("Exit");
                 }
@@ -42,7 +46,7 @@ public class BankCommander {
     private static void showMenu() {
         System.out.print("\n BANK MENU: Active client: ");
         if (currentClient != null) {
-            System.out.print(currentClient.getFirstname());
+            System.out.print(currentClient.getName());
         } else {
             System.out.print("none");
         }

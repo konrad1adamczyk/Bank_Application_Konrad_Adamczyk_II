@@ -17,24 +17,7 @@ public class SavingAccount extends AbstractAccount
 	}
 	// printReport(), displaying information about this account: the type of
 	// account and the balance.
-	@Override
-	public float getBalance() {
-		return balance;
-	}
 
-	@Override
-	public void setBalance(float balance) {
-		this.balance = balance;
-	}
-
-	public float getOverdraft() {
-		return overdraft;
-	}
-
-	public void setOverdraft(float overdraft) {
-		this.overdraft = overdraft;
-	}
-	
 	
 	 @Override
 	    public String toString() {

@@ -31,7 +31,7 @@ public class BankServiceImpl implements BankService
 	@Override
 	public void setActiveAccount(Client client, Account account)
 	{
-		client.setActiveAccont(account);
+		client.setActiveAccount(account);
 
 	}
 

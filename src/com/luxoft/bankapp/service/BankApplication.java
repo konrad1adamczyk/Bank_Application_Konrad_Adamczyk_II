@@ -11,9 +11,10 @@ public class BankApplication
 	public static void main(String[] args) throws BankException, ClientExistsException {
 		System.out.println("hello from bank app \n");
 
+		BankApplication bankApp = new BankApplication();
 		Bank pekao = new Bank("PeKaO");
 
-		BankApplication.initialize(pekao);
+		bankApp.initialize(pekao);
 
 		printBankReport(pekao);
 		
@@ -27,10 +28,10 @@ public class BankApplication
 		BankServiceImpl bankService = new BankServiceImpl();
 
 		Client[] clients = new Client[]
-		{ new Client(Gender.MALE, "Saladra", "Dawid", 7000), new Client(Gender.FEMALE, "Chrobak", "Monika", 4500), new Client(Gender.MALE, "Skurski", "Piotr", 2600),
-				new Client(Gender.MALE, "Tympalski", "Pawel", 5500), new Client(Gender.FEMALE, "Szpak", "Aleksandra", 1400), new Client(Gender.MALE, "Raczkowski", "Przemyslaw", 4000),
-				new Client(Gender.MALE, "Rosner", "Pawel", 800), new Client(Gender.FEMALE, "Banasik", "Patrycja", 900), new Client(Gender.FEMALE, "Shaleiko", "Oksana", 0),
-				new Client(Gender.MALE, "Adamczyk", "Konrad", 0), new Client(Gender.MALE, "Krzeminski", "Jaroslaw", 700), new Client(Gender.MALE, "Chlebda", "Lukasz", 200) };
+		{ new Client(Gender.MALE, "Saladra Dawid", 7000), new Client(Gender.FEMALE, "Chrobak Monika", 4500), new Client(Gender.MALE, "Skurski Piotr", 2600),
+				new Client(Gender.MALE, "Tympalski Pawel", 5500), new Client(Gender.FEMALE, "Szpak Aleksandra", 1400), new Client(Gender.MALE, "Raczkowski Przemyslaw", 4000),
+				new Client(Gender.MALE, "Rosner Pawel", 800), new Client(Gender.FEMALE, "Banasik Patrycja", 900), new Client(Gender.FEMALE, "Shaleiko Oksana", 1000),
+				new Client(Gender.MALE, "Adamczyk Konrad", 5000), new Client(Gender.MALE, "Krzeminski Jaroslaw", 700), new Client(Gender.MALE, "Chlebda Lukasz", 200) };
 
 		for (int i = 0; i < clients.length; i++)
 		{
@@ -50,7 +51,7 @@ public class BankApplication
 
 	public static void modifyBank(Bank bank) throws BankException, ClientExistsException {
 		BankServiceImpl bankService = new BankServiceImpl();
-		Client client = new Client(Gender.FEMALE, "Anna", "Pierzga", 1200);
+		Client client = new Client(Gender.FEMALE, "Anna Pierzga", 1200);
 		
 		bankService.addClient2(bank, client);
 
