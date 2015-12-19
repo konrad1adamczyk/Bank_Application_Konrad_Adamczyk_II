@@ -1,5 +1,7 @@
 package com.luxoft.bankapp.model;
 
+import com.luxoft.bankapp.ecxeptions.BankException;
+
 import java.util.*;
 
 public class Client implements Report
@@ -9,7 +11,7 @@ public class Client implements Report
 	private String firstname;
 	private String surname;
 	private List<Account> listOfAccounts = new ArrayList<Account>();
-	private Account activeAccont;
+	private Account activeAccount;
 	private float initialOverdraft;
 
 	// Add the possibility to keep a gender of the bank customer. Define the
@@ -59,16 +61,27 @@ public class Client implements Report
 		this.initialOverdraft = initialOverdraft;
 	}
 
-	public void setActiveAccont(Account accont)
+	public void setActiveAccont(Account activeAccount)
 	{
-		this.activeAccont = accont;
+		this.activeAccount = activeAccount;
+	}
+	public Account getActiveAccount() {
+		return activeAccount;
 	}
 
 //	************************************************************
 	public void addAccountToClient(Account account){
 		listOfAccounts.add(account);
 	}
+	public float getBalance() {return activeAccount.getBalance();}
 
+	public void deposit(float amount) {
+		if(activeAccount != null) activeAccount.deposit(amount);
+	}
+
+	public void withdraw(float amount) throws BankException {
+		if(activeAccount != null) activeAccount.withdraw(amount);
+	}
 
 	public List<Account> getListOfAccounts()
 	{
