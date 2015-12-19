@@ -4,7 +4,7 @@ import com.luxoft.bankapp.ecxeptions.BankException;
 
 import java.util.*;
 
-public class Client implements Report
+public class Client implements Report, Comparable<Client>
 {
 	private Gender gender;
 	private float balance;
@@ -134,5 +134,50 @@ public class Client implements Report
 		this.phone = phone;
 	}
 
+	@Override
+	public int compareTo(Client client) {
+		if (this == client)
+			return 0;
+		return this.name.compareTo(client.name);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getClientSalutation());
+
+		for (Account account: listOfAccounts)
+			sb.append(account);
+
+		return sb.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Client other = (Client) obj;
+		if (gender != other.gender)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
 
 }
