@@ -7,15 +7,19 @@ public abstract class AbstractAccount implements Account
 	private float overdraft;
 	private float balance;
 	protected String accountNumber;
+	private int id;
+	private static int counter = 0;
 
 
 	public AbstractAccount(float balance)
 	{
+		this.id = counter++;
 		this.balance = balance;
 	}
 
 	public AbstractAccount(String accountNumber, float balance)
 	{
+		this.id = counter++;
 		this.balance = balance;
 		this.accountNumber = accountNumber;
 	}
@@ -79,6 +83,9 @@ public abstract class AbstractAccount implements Account
 
 	public void deposit(float amount)
 	{
+		if (amount < 0)
+			throw new IllegalArgumentException();
+
 		balance = balance + amount;
 
 	}
@@ -95,26 +102,26 @@ public abstract class AbstractAccount implements Account
 		return ((float) (Math.round(balance * 100)) / 100);
 	}
 
-//	@Override
-//	public int hashCode() {
-//		final int prime = 31;
-//		int result = 1;
-//		result = prime * result + id;
-//		return result;
-//	}
-//
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		AbstractAccount other = (AbstractAccount) obj;
-//		if (id != other.id)
-//			return false;
-//		return true;
-//	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractAccount other = (AbstractAccount) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 
 }

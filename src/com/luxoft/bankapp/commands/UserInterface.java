@@ -98,8 +98,11 @@ public class UserInterface {
     static String getActiveAccountIndex(List<Account> accounts) throws IOException {
         System.out.println("Choose account: ");
         for (int i = 0; i < accounts.size(); i++) {
-//            System.out.println(i + ") " + accounts.get(i).printReport());
+            System.out.print(i + ") ");
+            accounts.get(i).printReport();
         }
+
+
         String indexStr = reader.readLine();
         if (!Validation.checkIsExpectedNumber(indexStr, accounts.size()-1)) {
             System.out.println("Invalid number selected!");

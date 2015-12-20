@@ -22,12 +22,12 @@ public class BankCommander {
             new AddClientCommand(), // 0    ***************
             new FindClientCommand(), // 1   ***************
             new OpenAccountCommand(), // 2  ***************
-            new CloseAccountCommand(), // 3
+//            new CloseAccountCommand(), // 3
             new GetAccountsCommand(), // 4  ***************
             new SetActiveAccountCommand(), // 5 ***************
 
-            new DepositCommand(), // 6
-            new WithdrawCommand(), // 7
+            new DepositCommand(), // 6 ***************
+            new WithdrawCommand(), // 7 ***************
             new TransferCommand(), // 8
 
             new Command() { // 9 - Exit Command
