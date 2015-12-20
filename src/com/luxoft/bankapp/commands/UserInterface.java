@@ -7,7 +7,9 @@ import com.luxoft.bankapp.util.Validation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Konrad on 2015-12-19.
@@ -95,12 +97,25 @@ public class UserInterface {
         return amountStr;
     }
 
-    static String getActiveAccountIndex(List<Account> accounts) throws IOException {
+    static String getActiveAccountIndex(Set<Account> accounts) throws IOException {
         System.out.println("Choose account: ");
-        for (int i = 0; i < accounts.size(); i++) {
-            System.out.print(i + ") ");
-            accounts.get(i).printReport();
+
+        for (Iterator<Account> it = accounts.iterator(); it.hasNext(); ) {
+           Account ac = it.next();
+            System.out.print(it + ") ");
+            ac.printReport();
         }
+
+
+
+
+//        Set<Foo> set = new HashSet<Foo>();
+//        set.add(new Foo("Hello"));
+//
+//        for (Iterator<Foo> it = set.iterator(); it.hasNext(); ) {
+//            Foo f = it.next();
+//            if (f.equals(new Foo("Hello")))
+//                System.out.println("foo found");}
 
 
         String indexStr = reader.readLine();

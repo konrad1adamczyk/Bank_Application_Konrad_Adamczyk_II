@@ -37,4 +37,5 @@ public class BankServiceTest {
         }
         assertTrue(client1.equals(client3));
     }
+
 }

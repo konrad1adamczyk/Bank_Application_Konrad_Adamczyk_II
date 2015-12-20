@@ -17,7 +17,7 @@ public class BankServiceImpl implements BankService
 	@Override
 	public void removeClient(Bank bank, Client client)
 	{
-		bank.getListOfClients().remove(client);
+		bank.removeClient(client);
 
 	}
 
@@ -35,10 +35,10 @@ public class BankServiceImpl implements BankService
 
 	}
 
-	@Override
-	public void removeClientByIndex(Bank bank, int index)
-	{
-		bank.removeClientByIndex(index);
-	}
+//	@Override
+//	public void removeClientByIndex(Bank bank, int index)
+//	{
+//		bank.removeClientByIndex(index);
+//	}
 
 }

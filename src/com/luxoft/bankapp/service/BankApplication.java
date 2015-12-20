@@ -1,14 +1,17 @@
 package com.luxoft.bankapp.service;
 
 import com.luxoft.bankapp.ecxeptions.ClientExistsException;
+import com.luxoft.bankapp.ecxeptions.ClientNotExistsException;
 import com.luxoft.bankapp.model.*;
 
 import com.luxoft.bankapp.ecxeptions.BankException;
 
+import java.util.Map;
+
 public class BankApplication
 {
 
-	public static void main(String[] args) throws BankException, ClientExistsException {
+	public static void main(String[] args) throws BankException, ClientExistsException, ClientNotExistsException {
 		System.out.println("hello from bank app \n");
 
 		BankApplication bankApp = new BankApplication();
@@ -49,7 +52,7 @@ public class BankApplication
 
 	}
 
-	public static void modifyBank(Bank bank) throws BankException, ClientExistsException {
+	public static void modifyBank(Bank bank) throws BankException, ClientExistsException, ClientNotExistsException {
 		BankServiceImpl bankService = new BankServiceImpl();
 		Client client = new Client(Gender.FEMALE, "Anna Pierzga", 1200);
 		
@@ -63,15 +66,18 @@ public class BankApplication
 		accountSaving.setAccountNumber();
 		bankService.addAccount(client, accountSaving);
 
-		for(Client client1: bank.getListOfClients())
-			for (Account account : client1.getListOfAccounts()) {
+		for(Map.Entry<String, Client> client1 : bank.getClientsMap().entrySet())
+			for (Account account : client1.getValue().getListOfAccounts()) {
 				account.withdraw(50000);
 				account.deposit(700);
 			}
-		
-		bankService.removeClientByIndex(bank, 2);
-		bankService.removeClientByIndex(bank, 1);
-		bankService.removeClientByIndex(bank, 0);
+
+		bankService.removeClient(bank, bank.getClient("Saladra Dawid"));
+		bankService.removeClient(bank, bank.getClient("Chrobak Monika"));
+		bankService.removeClient(bank, bank.getClient("Skurski Piotr"));
+		bankService.removeClient(bank, bank.getClient("Tympalski Pawel"));
+		bankService.removeClient(bank, bank.getClient("Szpak Aleksandra"));
+		bankService.removeClient(bank, bank.getClient("Raczkowski Przemyslaw"));
 		
 	}
 

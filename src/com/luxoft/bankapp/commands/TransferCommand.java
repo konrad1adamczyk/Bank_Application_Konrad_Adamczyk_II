@@ -9,6 +9,7 @@ import com.luxoft.bankapp.service.BankCommander;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by KAdamczyk on 2015-12-18.
@@ -26,7 +27,7 @@ public class TransferCommand implements Command {
                 try {
                     String name = UserInterface.getFullName();
                     Client client = BankCommander.currentBank.getClient(name);
-                    List<Account> accounts = client.getListOfAccounts();
+                    Set<Account> accounts = client.getListOfAccounts();
                     int index = Integer.parseInt(UserInterface.getActiveAccountIndex(accounts));
                     float transfer = Float.parseFloat(UserInterface.getAmount("transfer"));
 

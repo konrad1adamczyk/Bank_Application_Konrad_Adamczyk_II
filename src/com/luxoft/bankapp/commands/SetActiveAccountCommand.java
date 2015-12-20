@@ -5,6 +5,7 @@ import com.luxoft.bankapp.service.BankCommander;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Konrad on 2015-12-19.
@@ -15,7 +16,7 @@ public class SetActiveAccountCommand implements Command {
         if (BankCommander.currentClient != null &&
                 BankCommander.currentClient.getActiveAccount() != null) {
             try {
-                List<Account> accounts = BankCommander.currentClient.getListOfAccounts();
+                Set<Account> accounts = BankCommander.currentClient.getListOfAccounts();
                 int index = Integer.parseInt(UserInterface.getActiveAccountIndex(accounts));
 
                 BankCommander.currentClient.setActiveAccount(accounts.get(index));

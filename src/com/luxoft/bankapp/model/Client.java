@@ -2,36 +2,34 @@ package com.luxoft.bankapp.model;
 
 import com.luxoft.bankapp.ecxeptions.BankException;
 
+
 import java.util.*;
 
 public class Client implements Report, Comparable<Client>
 {
 	private Gender gender;
-	private float balance;
 	private String name;
 	private String email;
 	private String phone;
-	private List<Account> listOfAccounts = new ArrayList<Account>();
+
+	private Set<Account> listOfAccounts = new HashSet<Account>();
+//	private List<Account> listOfAccounts = new ArrayList<Account>();
 	private Account activeAccount;
 	private float initialOverdraft;
 
-	// Add the possibility to keep a gender of the bank customer. Define the
-	// relevant fields and Client class constructor.
 
-
-//	Client client = new Client(name,gender,initialOverdraft,email,phone);
 
 	public Client(String name)
 	{
 		this.name = name;
-		this.listOfAccounts = new ArrayList<Account>(2);
+		this.listOfAccounts = new HashSet<Account>(2);
 	}
 
 	public Client(String name, float initialOverdraft)
 	{
 		this.name = name;
 		this.initialOverdraft = initialOverdraft;
-		this.listOfAccounts = new ArrayList<Account>(2);
+		this.listOfAccounts = new HashSet<Account>(2);
 	}
 
 	public Client(Gender gender,String name, float initialOverdraft)
@@ -39,7 +37,7 @@ public class Client implements Report, Comparable<Client>
 		this.gender = gender;
 		this.name = name;
 		this.initialOverdraft = initialOverdraft;
-		this.listOfAccounts = new ArrayList<Account>(2);
+		this.listOfAccounts = new HashSet<Account>(2);
 	}
 
 	public Client(String name, Gender gender,float initialOverdraft,
@@ -97,9 +95,10 @@ public class Client implements Report, Comparable<Client>
 		if(activeAccount != null) activeAccount.withdraw(amount);
 	}
 
-	public List<Account> getListOfAccounts()
+	//***************************************
+	public Set<Account> getListOfAccounts()
 	{
-		return Collections.unmodifiableList(listOfAccounts);
+		return Collections.unmodifiableSet(listOfAccounts);
 	}
 
 	public String getClientSalutation()

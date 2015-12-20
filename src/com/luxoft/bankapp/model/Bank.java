@@ -1,9 +1,12 @@
 package com.luxoft.bankapp.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import com.luxoft.bankapp.ecxeptions.ClientExistsException;
 import com.luxoft.bankapp.ecxeptions.ClientNotExistsException;
@@ -12,13 +15,17 @@ import com.luxoft.bankapp.listeners.ClientRegistrationListener;
 public class Bank implements Report
 {
 	private String bankName;
-	private List<Client> listOfClients;
-	private List<ClientRegistrationListener> eventListeners;
+	private Set<Client> listOfClients=new TreeSet<Client>();
+	private Map<String, Client> clientsMap= new TreeMap<String, Client>();
+
+	Set<ClientRegistrationListener> eventListeners = new HashSet<ClientRegistrationListener>();
+
+
 
 	public Bank(String bankName)
 	{
 		this.setBankName(bankName);
-		listOfClients = new ArrayList<Client>();
+		listOfClients = new TreeSet<Client>();
 
 		class PrintClientListener implements ClientRegistrationListener {
 
@@ -43,7 +50,7 @@ public class Bank implements Report
 			}
 		}
 
-		eventListeners = new ArrayList<ClientRegistrationListener>();
+		eventListeners = new HashSet<ClientRegistrationListener>();
 
 		registerEvent(new PrintClientListener());
 		registerEvent(new EmailNotificationListener());
@@ -86,15 +93,18 @@ public class Bank implements Report
 		listOfClients.remove(client);
 	}
 
-	public void removeClientByIndex(int i)
-	{
-		listOfClients.remove(i);
+//	public void removeClientByIndex(int i)
+//	{
+//		listOfClients.remove(i);
+//	}
+
+	public Map<String, Client> getClientsMap() {
+		return Collections.unmodifiableMap(clientsMap);
+	}
+	public void setClientsMap(Map<String, Client> clientsMap) {
+		this.clientsMap = clientsMap;
 	}
 
-	public List<Client> getListOfClients()
-	{
-		return Collections.unmodifiableList(listOfClients);
-	}
 
 	@Override
 	public void printReport()
