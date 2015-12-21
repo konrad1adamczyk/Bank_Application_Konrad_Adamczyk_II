@@ -1,6 +1,7 @@
 package com.luxoft.bankapp.service;
 
 import com.luxoft.bankapp.commands.*;
+import com.luxoft.bankapp.ecxeptions.ClientExistsException;
 import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.model.Client;
 
@@ -8,18 +9,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.luxoft.bankapp.service.BankApplication.*;
-
 /**
  * Created by KAdamczyk on 2015-12-18.
  */
 public class BankCommander {
 
-    public static Bank currentBank = new Bank("MyBank");
+
+//    BankApplication bankApp = new BankApplication();
+//
+    public static Bank currentBank;
+//    bankApp.initialize(currentBank);
+
     public static Client currentClient;
 
-    static Command[] commands = {
-            new AddClientCommand(), // 0    ***************
+
+
+    static Command[] commands = {            new AddClientCommand(), // 0    ***************
+
             new FindClientCommand(), // 1   ***************
             new OpenAccountCommand(), // 2  ***************
 //            new CloseAccountCommand(), // 3
@@ -60,8 +66,15 @@ public class BankCommander {
         System.out.println("Choose a number: ");
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ClientExistsException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        BankApplication bankApp = new BankApplication();
+
+        currentBank = new Bank("MyBank");
+        bankApp.initialize(currentBank);
+
+        currentBank.printReport();
 
         while (true) {
             showMenu();

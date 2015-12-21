@@ -8,7 +8,6 @@ import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.service.BankCommander;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,7 +31,10 @@ public class TransferCommand implements Command {
                     float transfer = Float.parseFloat(UserInterface.getAmount("transfer"));
 
                     BankCommander.currentClient.getActiveAccount().withdraw(transfer);
-                    accounts.get(index).deposit(transfer);
+
+ // zrobić to przez wywyoływanie konta przez odniesienie do numeru konta a nie do indexu na liscie
+
+//                    accounts.get(index).deposit(transfer);
                     System.out.println("Transfer has been made.");
                 } catch (IOException e) {
                     e.printStackTrace();

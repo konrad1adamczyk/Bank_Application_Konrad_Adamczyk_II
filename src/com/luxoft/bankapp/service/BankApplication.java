@@ -27,7 +27,7 @@ public class BankApplication
 
 	}
 
-	public static void initialize(Bank bank) throws ClientExistsException {
+	public void initialize(Bank bank) throws ClientExistsException {
 		BankServiceImpl bankService = new BankServiceImpl();
 
 		Client[] clients = new Client[]

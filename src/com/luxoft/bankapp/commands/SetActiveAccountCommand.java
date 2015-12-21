@@ -4,7 +4,6 @@ import com.luxoft.bankapp.model.Account;
 import com.luxoft.bankapp.service.BankCommander;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,9 +18,13 @@ public class SetActiveAccountCommand implements Command {
                 Set<Account> accounts = BankCommander.currentClient.getListOfAccounts();
                 int index = Integer.parseInt(UserInterface.getActiveAccountIndex(accounts));
 
-                BankCommander.currentClient.setActiveAccount(accounts.get(index));
-                System.out.println("Choosen account: ");
-                accounts.get(index).printReport();
+
+
+    // zrobić to przez wywyoływanie konta przez odniesienie do numeru konta a nie do indexu na liscie
+
+//                BankCommander.currentClient.setActiveAccount(accounts.get(index));
+//                System.out.println("Choosen account: ");
+//                accounts.get(index).printReport();
 
             } catch (IOException e) {
                 e.printStackTrace();
