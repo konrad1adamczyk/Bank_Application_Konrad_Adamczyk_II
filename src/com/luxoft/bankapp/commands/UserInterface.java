@@ -97,34 +97,43 @@ public class UserInterface {
         return amountStr;
     }
 
-    static String getActiveAccountIndex(Set<Account> accounts) throws IOException {
-        System.out.println("Choose account: ");
-
+    static Account getActiveAccount(Set<Account> accounts) throws IOException {
+        System.out.println("Choose account by typing it's account number: ");
+        int i =0;
         for (Iterator<Account> it = accounts.iterator(); it.hasNext(); ) {
-           Account ac = it.next();
-            System.out.print(it + ") ");
+            Account ac = it.next();
+            System.out.print(i + ") ");
+            i++;
             ac.printReport();
         }
 
-
-
-
-//        Set<Foo> set = new HashSet<Foo>();
-//        set.add(new Foo("Hello"));
-//
-//        for (Iterator<Foo> it = set.iterator(); it.hasNext(); ) {
-//            Foo f = it.next();
-//            if (f.equals(new Foo("Hello")))
-//                System.out.println("foo found");}
-
-
-        String indexStr = reader.readLine();
-        if (!Validation.checkIsExpectedNumber(indexStr, accounts.size()-1)) {
+        String accountNumber = reader.readLine();
+        if (!Validation.checkIsAccountNumber(accountNumber)) {
             System.out.println("Invalid number selected!");
-            indexStr = getActiveAccountIndex(accounts);
+            getActiveAccount(accounts);
         }
-        return indexStr;
+
+        for (Iterator<Account> it = accounts.iterator(); it.hasNext(); ) {
+            Account ac = it.next();
+            if (ac.getAccountNumber().trim().equals(accountNumber.trim())){
+                return ac;
+            } else {
+                System.out.print("Un correct account number****! ");
+            }
+            ac.printReport();
+        }
+
+        return null;
     }
 
 
+    public static String getCity() throws IOException {
+        System.out.println("Enter the City name: ");
+        String city = reader.readLine();
+        if (!Validation.checkIsCity(city)) {
+            System.out.println("Please provide firstname and surname with first capital letter!");
+            city = getFullName();
+        }
+        return city;
+    }
 }

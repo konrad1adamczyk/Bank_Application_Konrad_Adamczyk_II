@@ -13,23 +13,18 @@ import java.io.IOException;
  */
 public class AddClientCommand implements Command {
 
-//    Register the new client by entering data about him, including the next: (AddClientCommand)
-//    ·      Full client name*
-//    ·      Electronic address of the client*
-//    ·      Phone number of the client*
-//    ·      Overdraft of the client*
-
     @Override
     public void execute() {
 
         try {
+            String city = UserInterface.getCity();
             String name = UserInterface.getFullName();
             String email = UserInterface.getEmail();
             String phone = UserInterface.getPhone();
             Gender gender = UserInterface.getGender();
             float initialOverdraft = Float.parseFloat(UserInterface.getOverdraft());
 
-            Client client = new Client(name,gender,initialOverdraft,email,phone);
+            Client client = new Client(name,gender, initialOverdraft,email,phone,city);
             BankCommander.currentBank.addClient(client);
             BankCommander.currentClient = client;
 

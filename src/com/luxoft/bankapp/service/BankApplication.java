@@ -22,19 +22,20 @@ public class BankApplication
 		printBankReport(pekao);
 		
 
-		 modifyBank(pekao);
-		 pekao.printReport();
-
+		modifyBank(pekao);
+		pekao.printReport();
+		System.out.println("******************************************");
+		bankApp.printBankReport(pekao);
 	}
 
 	public void initialize(Bank bank) throws ClientExistsException {
 		BankServiceImpl bankService = new BankServiceImpl();
 
 		Client[] clients = new Client[]
-		{ new Client(Gender.MALE, "Saladra Dawid", 7000), new Client(Gender.FEMALE, "Chrobak Monika", 4500), new Client(Gender.MALE, "Skurski Piotr", 2600),
-				new Client(Gender.MALE, "Tympalski Pawel", 5500), new Client(Gender.FEMALE, "Szpak Aleksandra", 1400), new Client(Gender.MALE, "Raczkowski Przemyslaw", 4000),
-				new Client(Gender.MALE, "Rosner Pawel", 800), new Client(Gender.FEMALE, "Banasik Patrycja", 900), new Client(Gender.FEMALE, "Shaleiko Oksana", 1000),
-				new Client(Gender.MALE, "Adamczyk Konrad", 5000), new Client(Gender.MALE, "Krzeminski Jaroslaw", 700), new Client(Gender.MALE, "Chlebda Lukasz", 200) };
+				{ new Client("Krakow", Gender.MALE, "Saladra Dawid", 7000), new Client("Wroclaw", Gender.FEMALE, "Chrobak Monika", 4500), new Client("Warszawa", Gender.MALE, "Skurski Piotr", 2600),
+				new Client("Krakow", Gender.MALE, "Tympalski Pawel", 5500), new Client("Wroclaw", Gender.FEMALE, "Szpak Aleksandra", 1400), new Client("Gdansk", Gender.MALE, "Raczkowski Przemyslaw", 4000),
+				new Client("Krakow", Gender.MALE, "Rosner Pawel", 800), new Client("Wroclaw", Gender.FEMALE, "Banasik Patrycja", 900), new Client("Gdansk", Gender.FEMALE, "Shaleiko Oksana", 1000),
+				new Client("Krakow", Gender.MALE, "Adamczyk Konrad", 5000), new Client("Warszawa", Gender.MALE, "Krzeminski Jaroslaw", 700), new Client("Zakopane", Gender.MALE, "Chlebda Lukasz", 200) };
 
 		for (int i = 0; i < clients.length; i++)
 		{
@@ -72,12 +73,12 @@ public class BankApplication
 				account.deposit(700);
 			}
 
-		bankService.removeClient(bank, bank.getClient("Saladra Dawid"));
-		bankService.removeClient(bank, bank.getClient("Chrobak Monika"));
-		bankService.removeClient(bank, bank.getClient("Skurski Piotr"));
-		bankService.removeClient(bank, bank.getClient("Tympalski Pawel"));
-		bankService.removeClient(bank, bank.getClient("Szpak Aleksandra"));
-		bankService.removeClient(bank, bank.getClient("Raczkowski Przemyslaw"));
+//		bankService.removeClient(bank, bank.getClient("Saladra Dawid"));
+//		bankService.removeClient(bank, bank.getClient("Chrobak Monika"));
+//		bankService.removeClient(bank, bank.getClient("Skurski Piotr"));
+//		bankService.removeClient(bank, bank.getClient("Tympalski Pawel"));
+//		bankService.removeClient(bank, bank.getClient("Szpak Aleksandra"));
+//		bankService.removeClient(bank, bank.getClient("Raczkowski Przemyslaw"));
 		
 	}
 
@@ -85,10 +86,15 @@ public class BankApplication
 	private static void printBankReport(Bank bank)
 	{ 
 		bank.printReport();
-		// Implement a method BankApplication.printBankReport (), displaying the
-		// balance on every account of all bank customers. The method should
-		// cause Bank.printReport ().
-		// Bank.printReport();
+
+		BankReport bankReport = new BankReport();
+		bankReport.getClientsSorted(bank);
+		bankReport.getBankCreditSum(bank);
+		bankReport.getNumberOfClients(bank);
+		bankReport.getAccountsNumber(bank);
+		bankReport.getClientsByCity(bank);
+
+
 	}
 
 }

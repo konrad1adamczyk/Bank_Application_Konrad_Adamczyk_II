@@ -16,15 +16,11 @@ public class SetActiveAccountCommand implements Command {
                 BankCommander.currentClient.getActiveAccount() != null) {
             try {
                 Set<Account> accounts = BankCommander.currentClient.getListOfAccounts();
-                int index = Integer.parseInt(UserInterface.getActiveAccountIndex(accounts));
+                Account activeAccount = UserInterface.getActiveAccount(accounts);
 
-
-
-    // zrobić to przez wywyoływanie konta przez odniesienie do numeru konta a nie do indexu na liscie
-
-//                BankCommander.currentClient.setActiveAccount(accounts.get(index));
-//                System.out.println("Choosen account: ");
-//                accounts.get(index).printReport();
+                BankCommander.currentClient.setActiveAccount(activeAccount);
+                System.out.println("Choosen account: ");
+                activeAccount.printReport();
 
             } catch (IOException e) {
                 e.printStackTrace();

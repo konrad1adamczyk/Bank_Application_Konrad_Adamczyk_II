@@ -15,6 +15,11 @@ import com.luxoft.bankapp.listeners.ClientRegistrationListener;
 public class Bank implements Report
 {
 	private String bankName;
+
+	public Set<Client> getListOfClients() {
+		return Collections.unmodifiableSet(listOfClients);
+	}
+
 	private Set<Client> listOfClients=new TreeSet<Client>();
 	private Map<String, Client> clientsMap= new TreeMap<String, Client>();
 

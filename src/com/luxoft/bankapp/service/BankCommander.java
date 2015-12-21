@@ -8,6 +8,9 @@ import com.luxoft.bankapp.model.Client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by KAdamczyk on 2015-12-18.
@@ -21,7 +24,7 @@ public class BankCommander {
 //    bankApp.initialize(currentBank);
 
     public static Client currentClient;
-
+    private static Map<String, Command> commandMap = new TreeMap<String, Command>();
 
 
     static Command[] commands = {            new AddClientCommand(), // 0    ***************
@@ -49,6 +52,22 @@ public class BankCommander {
             }
     };
 
+    static {
+        int i = 0;
+        for(Command cmd : commands) {
+            commandMap.put(String.valueOf(i), cmd);
+            i++;
+        }
+    }
+
+    public static void registerCommand(String name, Command command) {
+        commandMap.put(name, command);
+    }
+
+    public static void removeCommand(String name) {
+        commandMap.remove(name);
+    }
+
     private static void showMenu() {
         System.out.print("\n BANK MENU: Active client: ");
         if (currentClient != null) {
@@ -60,7 +79,8 @@ public class BankCommander {
 
         for (int i = 0; i < commands.length; i++) {
             System.out.print(i + ") ");
-            commands[i].printCommandInfo();
+            String k = ""+ i;
+            commandMap.get(k).printCommandInfo();
             System.out.println();
         }
         System.out.println("Choose a number: ");
@@ -80,8 +100,7 @@ public class BankCommander {
             showMenu();
             try {
                 String commandString = reader.readLine();
-                int command = Integer.valueOf(commandString.trim());
-                commands[command].execute();
+                commandMap.get(commandString.trim()).execute();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ArrayIndexOutOfBoundsException e) {

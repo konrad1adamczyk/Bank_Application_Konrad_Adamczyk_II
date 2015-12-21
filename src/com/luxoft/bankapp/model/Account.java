@@ -9,4 +9,6 @@ public interface Account extends Report{
 	public void deposit(float ammount);
 	public void withdraw(float ammount) throws BankException;
 	public float decimalValue();
+
+	public String getAccountNumber();
 }

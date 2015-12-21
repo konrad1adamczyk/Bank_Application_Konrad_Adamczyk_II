@@ -27,14 +27,14 @@ public class TransferCommand implements Command {
                     String name = UserInterface.getFullName();
                     Client client = BankCommander.currentBank.getClient(name);
                     Set<Account> accounts = client.getListOfAccounts();
-                    int index = Integer.parseInt(UserInterface.getActiveAccountIndex(accounts));
+                    Account activeAccount = UserInterface.getActiveAccount(accounts);
                     float transfer = Float.parseFloat(UserInterface.getAmount("transfer"));
 
                     BankCommander.currentClient.getActiveAccount().withdraw(transfer);
 
  // zrobić to przez wywyoływanie konta przez odniesienie do numeru konta a nie do indexu na liscie
 
-//                    accounts.get(index).deposit(transfer);
+                    activeAccount.deposit(transfer);
                     System.out.println("Transfer has been made.");
                 } catch (IOException e) {
                     e.printStackTrace();

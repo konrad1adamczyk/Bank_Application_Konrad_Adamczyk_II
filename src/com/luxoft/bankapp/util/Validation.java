@@ -10,13 +10,19 @@ public class Validation {
         }
     }
 
-    public static boolean checkIsEmail(String email) {
-        return email.matches(
-                "^[A-Za-z\\.-0-9]{2,}@[A-Za-z\\.-0-9]{2,}\\.[A-Za-z]{2,3}$");
-    }
+    public static boolean checkIsEmail(String email) { return email.matches("^[A-Za-z\\.-0-9]{2,}@[A-Za-z\\.-0-9]{2,}\\.[A-Za-z]{2,3}$");}
+
+//    public static boolean checkIsAccountNumber(String accountNumber){return accountNumber.matches("^[0-9\\- ]{26}$");}
+
+    public static boolean checkIsAccountNumber(String accountNumber){return accountNumber.matches("[0-9]{0,2}\\s[0-9]{0,4}\\s[0-9]{0,4}\\s[0-9]{0,4}\\s[0-9]{0,4}\\s[0-9]{0,4}\\s[0-9]{0,4}");}
+
 
     public static boolean checkIsFullName(String name) {
         return name.matches("([A-Z]\\w+ [A-Z]\\w+)");
+    }
+
+    public static boolean checkIsCity(String city) {
+        return city.matches("([A-Z]\\w+)");
     }
 
     public static boolean checkIsPhone(String phone) {

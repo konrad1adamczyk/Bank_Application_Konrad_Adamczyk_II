@@ -7,6 +7,8 @@ import java.util.*;
 
 public class Client implements Report, Comparable<Client>
 {
+
+	private String city;
 	private Gender gender;
 	private String name;
 	private String email;
@@ -32,6 +34,14 @@ public class Client implements Report, Comparable<Client>
 		this.listOfAccounts = new HashSet<Account>(2);
 	}
 
+	public Client(String city, Gender gender,String name, float initialOverdraft)
+	{
+		this.city = city;
+		this.gender = gender;
+		this.name = name;
+		this.initialOverdraft = initialOverdraft;
+		this.listOfAccounts = new HashSet<Account>(2);
+	}
 	public Client(Gender gender,String name, float initialOverdraft)
 	{
 		this.gender = gender;
@@ -40,11 +50,13 @@ public class Client implements Report, Comparable<Client>
 		this.listOfAccounts = new HashSet<Account>(2);
 	}
 
-	public Client(String name, Gender gender,float initialOverdraft,
-				  String email, String phone) {
+
+	public Client(String name, Gender gender,float initialOverdraft,String email, String phone, String city) {
 		this(gender,name,  initialOverdraft);
 		this.email = email;
 		this.phone = phone;
+		this.city = city;
+		this.listOfAccounts = new HashSet<Account>(2);
 	}
 
 	public String getName()
@@ -111,7 +123,7 @@ public class Client implements Report, Comparable<Client>
 	{
 		// the customer should override method printReport (), which has to
 		// display information about the customer and all of its accounts
-		 System.out.print("\n" + getClientSalutation() + " " + name + "\n" );
+		 System.out.print("\n" + getClientSalutation() + " " + name + ", Miasto: " + getCity() +"\n" );
 		 listOfAccounts.forEach(account -> account.printReport());
 
 	}
@@ -137,7 +149,7 @@ public class Client implements Report, Comparable<Client>
 	public int compareTo(Client client) {
 		if (this == client)
 			return 0;
-		return this.name.compareTo(client.name);
+		return this.name.compareTo(client.getName());
 	}
 
 	@Override
@@ -177,6 +189,13 @@ public class Client implements Report, Comparable<Client>
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 }
