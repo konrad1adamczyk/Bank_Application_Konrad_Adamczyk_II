@@ -1,16 +1,10 @@
 package com.luxoft.bankapp.model;
 
-import java.util.Collections;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
 import com.luxoft.bankapp.ecxeptions.ClientExistsException;
 import com.luxoft.bankapp.ecxeptions.ClientNotExistsException;
 import com.luxoft.bankapp.listeners.ClientRegistrationListener;
+
+import java.util.*;
 
 public class Bank implements Report
 {
@@ -30,7 +24,7 @@ public class Bank implements Report
 	public Bank(String bankName)
 	{
 		this.setBankName(bankName);
-		listOfClients = new TreeSet<Client>();
+		listOfClients = new TreeSet<>();
 
 		class PrintClientListener implements ClientRegistrationListener {
 
