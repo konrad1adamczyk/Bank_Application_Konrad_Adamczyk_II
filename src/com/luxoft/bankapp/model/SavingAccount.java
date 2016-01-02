@@ -1,6 +1,9 @@
 package com.luxoft.bankapp.model;
 
-public class SavingAccount extends AbstractAccount
+import java.io.Serializable;
+import java.util.Map;
+
+public class SavingAccount extends AbstractAccount implements Serializable
 {
 	private float balance;
 	private float overdraft;
@@ -25,4 +28,10 @@ public class SavingAccount extends AbstractAccount
 	    }
 
 
+
+
+	@Override
+	public String getAccountType() {
+		return "s";
+	}
 }

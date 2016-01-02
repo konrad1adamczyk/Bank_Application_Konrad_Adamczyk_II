@@ -18,7 +18,11 @@ import java.util.TreeMap;
 public class BankCommander {
 
 
-//    BankApplication bankApp = new BankApplication();
+    public static Bank getCurrentBank() {
+        return currentBank;
+    }
+
+    //    BankApplication bankApp = new BankApplication();
 //
     public static Bank currentBank;
 //    bankApp.initialize(currentBank);

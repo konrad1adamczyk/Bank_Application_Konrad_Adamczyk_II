@@ -2,6 +2,8 @@ package com.luxoft.bankapp.model;
 
 import com.luxoft.bankapp.ecxeptions.BankException;
 
+import java.util.Map;
+
 public interface Account extends Report{
 	
 	public float getBalance();
@@ -9,6 +11,7 @@ public interface Account extends Report{
 	public void deposit(float ammount);
 	public void withdraw(float ammount) throws BankException;
 	public float decimalValue();
-
 	public String getAccountNumber();
+	public void parseFeed(Map<String,String> feed);
+	public String getAccountType();
 }

@@ -9,6 +9,11 @@ public class CheckingAccount extends AbstractAccount
 	{
 		super(balance);
 	}
+	public CheckingAccount(float balance, float overdraft)
+	{
+		super(balance);
+		this.overdraft = overdraft;
+	}
 	public CheckingAccount(String accountNumber, float balance)
 	{
 		super(accountNumber, balance);
@@ -19,5 +24,9 @@ public class CheckingAccount extends AbstractAccount
         return "Checking Account have balance: " + getBalance() + " and overdraft: " + getOverdraft();
     }
 
+	@Override
+	public String getAccountType() {
+		return "c";
+	}
 
 }
