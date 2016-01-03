@@ -2,7 +2,12 @@ package com.luxoft.bankapp.model;
 
 import com.luxoft.bankapp.ecxeptions.BankException;
 
-public abstract class AbstractAccount implements Account
+import java.io.Serializable;
+import java.util.Map;
+
+
+
+public abstract class AbstractAccount implements Account, Serializable
 {
 	private float overdraft;
 	private float balance;
@@ -10,8 +15,12 @@ public abstract class AbstractAccount implements Account
 	private int id;
 	private static int counter = 0;
 
+	AbstractAccount() {
+		balance = 0;
+		id = counter++;
+	}
 
-	public AbstractAccount(float balance)
+	AbstractAccount(float balance)
 	{
 		this.id = counter++;
 		this.balance = balance;
@@ -122,6 +131,11 @@ public abstract class AbstractAccount implements Account
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	@Override
+	public void parseFeed(Map<String, String> feed) {
+		setBalance(Float.parseFloat(feed.get("balance")));
 	}
 
 }

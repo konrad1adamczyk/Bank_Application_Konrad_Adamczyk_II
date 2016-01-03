@@ -1,13 +1,15 @@
 package com.luxoft.bankapp.model;
 
 import com.luxoft.bankapp.ecxeptions.BankException;
+import com.luxoft.bankapp.ecxeptions.FeedException;
 
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Client implements Report, Comparable<Client>
+public class Client implements Report, Comparable<Client> , Serializable
 {
-
+	private static final long serialVersionUID = -314495632608649981L;
 	private String city;
 	private Gender gender;
 	private String name;
@@ -196,6 +198,41 @@ public class Client implements Report, Comparable<Client>
 	}
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+
+
+
+
+	public void parseFeed(Map<String, String> feed) {
+		String accountType = feed.get("accounttype");
+		Account account = getAccount(accountType);
+		gender = Gender.parseGender(feed.get("gender"));
+
+		account.parseFeed(feed);
+	}
+
+	private Account getAccount(String accountType) throws FeedException {
+		for (Account account: listOfAccounts) {
+			if (account.getAccountType().equals(accountType)) {
+				return account;
+			}
+		}
+		return createAccount(accountType);
+	}
+
+	private Account createAccount(String accountType) throws FeedException {
+		Account account = null;
+		if ("s".equals(accountType)) {
+			account = new SavingAccount();
+		} else if ("c".equals(accountType)) {
+			account = new CheckingAccount();
+		} else {
+			throw new FeedException("Account type not found " + accountType);
+		}
+		listOfAccounts.add(account);
+
+		return account;
 	}
 
 }

@@ -89,8 +89,11 @@ public class Bank implements Report
 
 	public void removeClient(Client client)
 	{
-		listOfClients.remove(client);
+		if (!listOfClients.isEmpty()) {
+			listOfClients.remove(client);
+		}
 	}
+
 
 //	public void removeClientByIndex(int i)
 //	{
@@ -112,6 +115,19 @@ public class Bank implements Report
 		// all clients by calling client.printReport() for each client.
 		listOfClients.forEach(client -> client.printReport());
 		System.out.println("----------------------------------------");
+	}
+
+	public void parseFeed(Map<String, String> feed) {
+		String name = feed.get("name");
+
+		Client client = clientsMap.get(name);
+		if (client == null) {
+			client = new Client(name, Float.parseFloat(feed.get("overdraft")));
+			listOfClients.add(client);
+			clientsMap.put(name, client);
+		}
+
+		client.parseFeed(feed);
 	}
 
 	public String getBankName()

@@ -5,6 +5,7 @@ package com.luxoft.bankapp.ecxeptions;
  */
 public class ClientNotExistsException extends Throwable {
     private String name;
+    private static final long serialVersionUID = 7471041238018929740L;
 
     public ClientNotExistsException(){
     }
