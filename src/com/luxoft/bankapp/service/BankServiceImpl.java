@@ -67,8 +67,11 @@ public class BankServiceImpl implements BankService
 		}
 
 
-		try (ObjectOutputStream ous = new ObjectOutputStream( new FileOutputStream(CLIENT_FILE))) {
+		try (ObjectOutputStream ous = new ObjectOutputStream( new FileOutputStream(CLIENT_FILE)))
+		{
 			ous.writeObject(client);
+			String newLine = ";\n";
+			ous.writeObject(newLine);
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Couldn't Find the File");

@@ -17,24 +17,27 @@ public class TestSerialization {
 
     public static void main(String[] args) throws ClientExistsException {
 
-        BankApplication bankApp = new BankApplication();
+//        BankApplication bankApp = new BankApplication();
+//        currentBank = new Bank("bankTest");
+//        bankApp.initialize(currentBank);
+//        currentBank.printReport();
 
-        currentBank = new Bank("bankTest");
-        bankApp.initialize(currentBank);
+        BankService bankService = new BankServiceImpl();
 
-        currentBank.printReport();
+        Client client = new Client("Konradek Koba", Gender.MALE, 5432f, "konradek@gmail.com", "294-543-234", "Krakow");
 
-        BankService bankService;
-
-        bankService = new BankServiceImpl();
-
-        Client client = new Client("Konradek Koba", Gender.MALE, 5432f, "konradek@gmail.com",
-                "294-543-234", "Krakow");
+        Client client2 = new Client("Ania Kochana", Gender.FEMALE, 1234f, "ania@gmail.com", "294-569-234", "Krynica");
 
         bankService.saveClient(client);
-        Client recoverClient = bankService.loadClient();
+        bankService.saveClient(client2);
 
-        recoverClient.printReport();
+        Client recoverClient1 = bankService.loadClient();
+        Client recoverClient2 = bankService.loadClient();
+
+        client2.printReport();
+        recoverClient1.printReport();
+        System.out.println("------------------------");
+        recoverClient2.printReport();
 //        currentBank.printReport();
 
 

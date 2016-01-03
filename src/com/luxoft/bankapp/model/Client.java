@@ -125,7 +125,8 @@ public class Client implements Report, Comparable<Client> , Serializable
 	{
 		// the customer should override method printReport (), which has to
 		// display information about the customer and all of its accounts
-		 System.out.print("\n" + getClientSalutation() + " " + name + ", City: " + getCity() + ", E-mail: " + getEmail()+ ", Phone: " + getPhone()+"\n" );
+		 System.out.print("\n" + getClientSalutation() + " " + name + ", City: " + getCity() + ", E-mail: " + getEmail()
+				 + ", Phone: " + getPhone()+ ", Initial Overdraft: " + getInitialOverdraft()+"\n" );
 		 listOfAccounts.forEach(account -> account.printReport());
 
 	}
