@@ -47,15 +47,27 @@ public class BankServiceImpl implements BankService
 		return bank.getClient(clientName);
 	}
 
+	private void createFile() throws IOException{
+		File targetFile = new File(CLIENT_FILE);
+		File parent = targetFile.getParentFile();
+		if(!parent.exists() && !parent.mkdirs()){
+			throw new IllegalStateException("Couldn't create dir: " + parent);
+		}
+		targetFile.createNewFile();
+	}
+
 	@Override
 	public void saveClient(Client client) {
 
-		File curentFile = new File(CLIENT_FILE);
+
+		try {
+			createFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 
-
-		try (ObjectOutputStream ous = new ObjectOutputStream(
-				new FileOutputStream(CLIENT_FILE))) {
+		try (ObjectOutputStream ous = new ObjectOutputStream( new FileOutputStream(CLIENT_FILE))) {
 			ous.writeObject(client);
 
 		} catch (FileNotFoundException e) {
