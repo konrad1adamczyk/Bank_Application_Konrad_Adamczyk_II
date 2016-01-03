@@ -2,8 +2,6 @@ package com.luxoft.bankapp.model;
 
 import com.luxoft.bankapp.ecxeptions.BankException;
 
-import java.util.Map;
-
 public abstract class AbstractAccount implements Account
 {
 	private float overdraft;
@@ -124,11 +122,6 @@ public abstract class AbstractAccount implements Account
 		if (id != other.id)
 			return false;
 		return true;
-	}
-
-	@Override
-	public void parseFeed(Map<String, String> feed) {
-
 	}
 
 }

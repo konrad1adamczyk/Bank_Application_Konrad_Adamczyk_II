@@ -1,13 +1,11 @@
 package com.luxoft.bankapp.model;
 
 import com.luxoft.bankapp.ecxeptions.BankException;
-import com.luxoft.bankapp.service.FeedException;
 
 
-import java.io.Serializable;
 import java.util.*;
 
-public class Client implements Report, Comparable<Client> , Serializable
+public class Client implements Report, Comparable<Client>
 {
 
 	private String city;
@@ -51,23 +49,7 @@ public class Client implements Report, Comparable<Client> , Serializable
 		this.initialOverdraft = initialOverdraft;
 		this.listOfAccounts = new HashSet<Account>(2);
 	}
-	public Client(String name, String city, String email, String phone, Gender gender) {
-		this(name);
-		this.gender = gender;
-		this.email = email;
-		this.phone = phone;
-		this.city = city;
-		this.listOfAccounts = new HashSet<Account>();
-	}
-	public Client(String name,String city, String email, String phone, Gender gender, float initialOverdraft) {
-		this.listOfAccounts = new HashSet<Account>();
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		this.gender = gender;
-		this.initialOverdraft = initialOverdraft;
-		this.city = city;
-	}
+
 
 	public Client(String name, Gender gender,float initialOverdraft,String email, String phone, String city) {
 		this(gender,name,  initialOverdraft);
@@ -146,13 +128,6 @@ public class Client implements Report, Comparable<Client> , Serializable
 
 	}
 
-	public Gender getClientGender() {
-		return gender;
-	}
-
-	public void setClientGender(Gender clientGender) {
-		this.gender = clientGender;
-	}
 
 	public String getEmail() {
 		return email;
@@ -221,47 +196,6 @@ public class Client implements Report, Comparable<Client> , Serializable
 	}
 	public void setCity(String city) {
 		this.city = city;
-	}
-
-	private Account getAccount(String accountType) {
-		for (Account acc: listOfAccounts) {
-			if (acc.getAccountType().equals(accountType)) {
-				return acc;
-			}
-		}
-		return createAccount(accountType);
-	}
-
-	private Account createAccount(String accountType) {
-		Account acc;
-		if ("SavingAccount".equals(accountType)) {
-			acc = new SavingAccount(0);
-		} else if ("CheckingAccount".equals(accountType)) {
-			acc = new CheckingAccount(0);
-		} else {
-			throw new FeedException("Account type not found "+accountType);
-		}
-		listOfAccounts.add(acc);
-		return acc;
-	}
-
-	public void parseFeed(Map<String, String> feed) {
-		//accounttype=c|s;balance=100;overdraft=50;name=John;gender=m|f;
-
-		String accountType = feed.get("accounttype");
-		Account acc = getAccount(accountType);
-
-		this.name=feed.get(name);
-
-		if(feed.get("gender").equals("m"))
-			this.setClientGender(Gender.MALE);
-		else
-			this.setClientGender(Gender.FEMALE);
-
-
-		this.initialOverdraft=Float.parseFloat(feed.get("overdraft"));
-
-		acc.parseFeed(feed);
 	}
 
 }
