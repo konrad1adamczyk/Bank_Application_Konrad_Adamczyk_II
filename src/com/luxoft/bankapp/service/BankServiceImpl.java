@@ -11,7 +11,7 @@ import java.io.*;
 
 public class BankServiceImpl implements BankService
 {
-	private static final String CLIENT_FILE = "resources/client.ser";
+	private static final String CLIENT_FILE = "resources/client.txt";
 
 	@Override
 	public void addClient2(Bank bank, Client client) throws ClientExistsException {
@@ -49,11 +49,20 @@ public class BankServiceImpl implements BankService
 
 	@Override
 	public void saveClient(Client client) {
+
+		File curentFile = new File(CLIENT_FILE);
+
+
+
 		try (ObjectOutputStream ous = new ObjectOutputStream(
 				new FileOutputStream(CLIENT_FILE))) {
 			ous.writeObject(client);
+
 		} catch (FileNotFoundException e) {
+			System.out.println("Couldn't Find the File");
+//			System.exit(0);
 			e.printStackTrace();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -61,12 +70,19 @@ public class BankServiceImpl implements BankService
 
 	@Override
 	public Client loadClient() {
+
+
+
+
 		Client client = null;
 		try (ObjectInputStream ois = new ObjectInputStream(
 				new FileInputStream(CLIENT_FILE))) {
 			client = (Client) ois.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+//		} catch (FileNotFoundException e) {
+//			System.out.println("Couldn't Find the File");
+//			System.exit(0);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
