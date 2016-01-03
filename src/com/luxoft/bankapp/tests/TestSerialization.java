@@ -24,7 +24,7 @@ public class TestSerialization {
 
         BankService bankService = new BankServiceImpl();
 
-        Client client = new Client("Konradek Koba", Gender.MALE, 5432f, "konradek@gmail.com", "294-543-234", "Krakow");
+        Client client = new Client("Konradek Ad", Gender.MALE, 5432f, "konradek@gmail.com", "294-543-234", "Krakow");
 
         Client client2 = new Client("Ania Kochana", Gender.FEMALE, 1234f, "ania@gmail.com", "294-569-234", "Krynica");
 

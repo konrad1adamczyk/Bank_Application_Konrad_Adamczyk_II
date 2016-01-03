@@ -11,7 +11,7 @@ import java.io.*;
 
 public class BankServiceImpl implements BankService
 {
-	private static final String CLIENT_FILE = "resources/client.txt";
+	private static final String CLIENT_FILE = "resources/clients.txt";
 
 	@Override
 	public void addClient2(Bank bank, Client client) throws ClientExistsException {
