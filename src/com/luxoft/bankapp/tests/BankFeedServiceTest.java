@@ -13,7 +13,6 @@ public class BankFeedServiceTest {
     private static final String CLIENT_FILE = "resource/";
 
     public static void main(String[] args) throws ClientExistsException {
-        BankApplication bankApp = new BankApplication();
         Bank testBank = new Bank("testBank");
         testBank.printReport();
 
@@ -25,7 +24,6 @@ public class BankFeedServiceTest {
         bfs.loadFeed(CLIENT_FILE);
 
         testBank.printReport();
-
     }
 
 }
