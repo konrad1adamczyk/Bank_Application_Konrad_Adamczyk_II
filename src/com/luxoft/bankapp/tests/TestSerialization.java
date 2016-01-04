@@ -7,6 +7,8 @@ import com.luxoft.bankapp.model.Gender;
 import com.luxoft.bankapp.service.BankService;
 import com.luxoft.bankapp.service.BankServiceImpl;
 
+import java.util.Set;
+
 
 /**
  * Created by Konrad on 2016-01-03.
@@ -26,20 +28,17 @@ public class TestSerialization {
         BankService bankService = new BankServiceImpl();
 
         Client client = new Client("Konradek Ad", Gender.MALE, 5432f, "konradek@gmail.com", "294-543-234", "Krakow");
-
         Client client2 = new Client("Ania Ka", Gender.FEMALE, 1234f, "ania@gmail.com", "291-569-567", "Krynica");
 
         bankService.saveClient(client);
         bankService.saveClient(client2);
 
-        Client recoverClient1 = bankService.loadClient();
-        Client recoverClient2 = bankService.loadClient();
+        Set<Client> listOfClientsInTestBank = bankService.loadClients("resources/");
 
-        client2.printReport();
-        recoverClient1.printReport();
-        System.out.println("------------------------");
-        recoverClient2.printReport();
-//        currentBank.printReport();
+        listOfClientsInTestBank.forEach(person -> person.printReport());
+
+
+
 
 
     }

@@ -1,5 +1,8 @@
 package com.luxoft.bankapp.network;
 
+import com.luxoft.bankapp.model.Bank;
+import com.luxoft.bankapp.model.Client;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,16 +13,39 @@ import java.net.Socket;
  * Created by KAdamczyk on 2016-01-04.
  */
 public class BankServer {
-    ServerSocket providerSocket;
-    Socket connection = null;
-    ObjectOutputStream out;
-    ObjectInputStream in;
+//    protected int serverPort;
+
+    protected ServerSocket providerSocket;
+    protected Socket connection = null;
+    protected ObjectOutputStream out;
+    protected ObjectInputStream in;
     String message;
 
+    protected Bank activeBank;
+    protected Client loggedClient;
+   private int serverPort = 2004 ;
+    public BankServer() {
+
+    }
+    public BankServer(Bank bank) {
+        activeBank = bank;
+    }
+    public BankServer(Bank bank, int port) {
+//        serverPort = port ;
+        serverPort = 2004 ;
+        activeBank = bank;
+    }
+
     void run() {
+//        activeBank.printReport();
+
+        System.out.println("==============");
+        System.out.println("localhost:" + serverPort);
+        System.out.println("==============");
+
         try {
             // 1. creating a server socket
-            providerSocket = new ServerSocket(2004, 10);
+            providerSocket = new ServerSocket(serverPort, 10);
             // 2. Wait for connection
             System.out.println("Waiting for connection");
             connection = providerSocket.accept();
@@ -33,7 +59,7 @@ public class BankServer {
             do {
                 try {
                     message = (String) in.readObject();
-                    System.out.println("client>" + message);
+                    System.out.println("client> " + message);
                     if (message.equals("bye"))
                         sendMessage("bye");
                 } catch (ClassNotFoundException classnot) {
@@ -65,7 +91,7 @@ public class BankServer {
     }
 
     public static void main(final String args[]) {
-        BankServer server = new BankServer();
+        BankServer server = new BankServer( );
         while (true) {
             server.run();
         }

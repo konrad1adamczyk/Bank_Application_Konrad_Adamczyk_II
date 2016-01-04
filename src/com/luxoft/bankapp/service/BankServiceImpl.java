@@ -8,10 +8,12 @@ import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.util.Validation;
 
 import java.io.*;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class BankServiceImpl implements BankService
 {
-	private static final String CLIENT_FILE = "resources/clients.txt";
+	private static String CLIENT_FILE;
 
 	@Override
 	public void addClient2(Bank bank, Client client) throws ClientExistsException {
@@ -47,7 +49,8 @@ public class BankServiceImpl implements BankService
 		return bank.getClient(clientName);
 	}
 
-	private void createFile() throws IOException{
+	private void createFile( Client client) throws IOException{
+		CLIENT_FILE = "resources/"+ client.getName() + ".txt";
 		File targetFile = new File(CLIENT_FILE);
 		File parent = targetFile.getParentFile();
 		if(!parent.exists() && !parent.mkdirs()){
@@ -59,9 +62,10 @@ public class BankServiceImpl implements BankService
 	@Override
 	public void saveClient(Client client) {
 
+		CLIENT_FILE = "resources/"+ client.getName() + ".txt";
 
 		try {
-			createFile();
+			createFile(client);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -70,8 +74,7 @@ public class BankServiceImpl implements BankService
 		try (ObjectOutputStream ous = new ObjectOutputStream( new FileOutputStream(CLIENT_FILE)))
 		{
 			ous.writeObject(client);
-			String newLine = ";\n";
-			ous.writeObject(newLine);
+
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Couldn't Find the File");
@@ -83,20 +86,31 @@ public class BankServiceImpl implements BankService
 		}
 	}
 
-	@Override
-	public Client loadClient() {
+	private Set<Client> listOfClientsInTestBank=new TreeSet<Client>();
 
-		Client client = null;
-		try (ObjectInputStream ois = new ObjectInputStream(
-				new FileInputStream(CLIENT_FILE))) {
-			client = (Client) ois.readObject();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+	@Override
+	public Set<Client> loadClients(String folderStr) {
+		File folder = new File(folderStr);
+
+		for (File fileEntry : folder.listFiles()) {
+			if (fileEntry.isFile()) {
+				Client client = null;
+				try (ObjectInputStream ois = new ObjectInputStream(
+						new FileInputStream(fileEntry))) {
+					client = (Client) ois.readObject();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				listOfClientsInTestBank.add(client);
+			}
 		}
-		return client;
+		return listOfClientsInTestBank;
+
 	}
+
+
 
 
 }

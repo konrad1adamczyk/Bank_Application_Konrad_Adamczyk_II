@@ -1,8 +1,8 @@
 package com.luxoft.bankapp.network;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.luxoft.bankapp.service.BankServiceImpl;
+
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -10,17 +10,28 @@ import java.net.UnknownHostException;
  * Created by KAdamczyk on 2016-01-04.
  */
 public class BankClient {
-    Socket requestSocket;
-    ObjectOutputStream out;
-    ObjectInputStream in;
-    String message;
-    static final String SERVER = "localhost";
+
+    protected Socket requestSocket;
+    protected ObjectOutputStream out;
+    protected ObjectInputStream in;
+    protected String message;
+    protected static final String SERVER = "localhost";
+    protected final int port;
+    protected String user = null;
+
+    protected BankServiceImpl bankService = new BankServiceImpl();
+
+    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+    public BankClient(int port) {
+        this.port = port;
+    }
 
     void run() {
         try {
             // 1. creating a socket to connect to the server
-            requestSocket = new Socket(SERVER, 2004);
-            System.out.println("Connected to localhost in port 2004");
+            requestSocket = new Socket(SERVER, port);
+            System.out.println("Connected to localhost in port " + port);
             // 2. get Input and Output streams
             out = new ObjectOutputStream(requestSocket.getOutputStream());
             out.flush();
@@ -29,7 +40,7 @@ public class BankClient {
             do {
                 try {
                     message = (String) in.readObject();
-                    System.out.println("server>" + message);
+                    System.out.println("server> " + message);
                     sendMessage("Hi my server");
                     message = "bye";
                     sendMessage(message);
@@ -64,7 +75,8 @@ public class BankClient {
     }
 
     public static void main(final String args[]) {
-        BankClient client = new BankClient();
+        int port = 2004;
+        BankClient client = new BankClient(port);
         client.run();
     }
 
