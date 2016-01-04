@@ -23,6 +23,7 @@ public class BankFeedServiceTest {
 
         bfs.loadFeed(CLIENT_FILE);
 
+
         testBank.printReport();
     }
 

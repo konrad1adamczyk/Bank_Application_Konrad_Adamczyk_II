@@ -102,7 +102,7 @@ public abstract class AbstractAccount implements Account, Serializable
 	public void printReport()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("This ").append(this.toString()).append(" with account number: ").append(getAccountNumber()).append("Has balance of ").append(getBalance()).append(" USD");
+		sb.append("This ").append(this.toString()).append(" with account number: ").append(getAccountNumber());
 		System.out.println(sb);
 
 	}

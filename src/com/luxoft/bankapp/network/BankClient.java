@@ -1,5 +1,6 @@
 package com.luxoft.bankapp.network;
 
+import com.luxoft.bankapp.requests.*;
 import com.luxoft.bankapp.service.BankServiceImpl;
 
 import java.io.*;
@@ -17,35 +18,120 @@ public class BankClient {
     protected String message;
     protected static final String SERVER = "localhost";
     protected final int port;
-    protected String user = null;
-
-    protected BankServiceImpl bankService = new BankServiceImpl();
-
+    protected Request[] requestArray = {
+            new LogInRequest(),
+            new GetAccountsRequest(),
+            new ChangeActiveAccountRequest(),
+            new DepositRequest(),
+            new WithdrawRequest(),
+            new LogOutRequest()};
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public BankClient(int port) {
         this.port = port;
     }
 
+    public void printRequests() {
+        int i = 1;
+        for (Request request : requestArray) {
+            System.out.print(i + ") ");
+            request.printRequestInfo();
+            i++;
+        }
+    }
+
+    public void sendRequest(Request request) {
+        try {
+            out.writeObject(request);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeActiveAccount() {
+        System.out.println("Write account id number: ");
+        String id = null;
+        try {
+            id = reader.readLine();
+            ChangeActiveAccountRequest changeActiveAccountRequest =
+                    new ChangeActiveAccountRequest();
+            changeActiveAccountRequest.setAccountId(Integer.valueOf(id));
+            sendRequest(changeActiveAccountRequest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deposit() {
+        System.out.println("Write amount of money to deposit: ");
+        String amount = null;
+        try {
+            amount = reader.readLine();
+            DepositRequest depositRequest = new DepositRequest();
+            depositRequest.setDepositAmount(Float.valueOf(amount));
+            sendRequest(depositRequest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void withdraw() {
+        System.out.println("Write amount of money to withdraw: ");
+        String amount = null;
+        try {
+            amount = reader.readLine();
+            WithdrawRequest withdrawRequest = new WithdrawRequest();
+            withdrawRequest.setWithdrawAmount(Float.valueOf(amount));
+            sendRequest(withdrawRequest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void serviceRequest() throws IOException {
+        printRequests();
+        reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String answer = reader.readLine();
+
+        if (answer.equals("1")) {
+            System.out.println("Write your name to log in: ");
+            String name = reader.readLine();
+            LogInRequest logInRequest = new LogInRequest(name);
+            sendRequest(logInRequest);
+        } else if (answer.equals("2")) {
+            sendRequest(new GetAccountsRequest());
+        } else if (answer.equals("3")) {
+            changeActiveAccount();
+        } else if (answer.equals("4")) {
+            deposit();
+        } else if (answer.equals("5")) {
+            withdraw();
+        } else if (answer.equals("6")) {
+            message = "bye";
+            sendRequest(new LogOutRequest());
+        }
+    }
+
+
+
     void run() {
         try {
-            // 1. creating a socket to connect to the server
+
             requestSocket = new Socket(SERVER, port);
             System.out.println("Connected to localhost in port " + port);
-            // 2. get Input and Output streams
             out = new ObjectOutputStream(requestSocket.getOutputStream());
             out.flush();
             in = new ObjectInputStream(requestSocket.getInputStream());
-            // 3: Communicating with the server
             do {
                 try {
                     message = (String) in.readObject();
                     System.out.println("server> " + message);
-                    sendMessage("Hi my server");
-                    message = "bye";
-                    sendMessage(message);
+                    serviceRequest();
+
                 } catch (ClassNotFoundException classNot) {
-                    System.err.println("data received in unknown format");
+                    System.err.println("Data received in unknown format");
                 }
             } while (!message.equals("bye"));
         } catch (UnknownHostException unknownHost) {
@@ -53,7 +139,6 @@ public class BankClient {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         } finally {
-            // 4: Closing connection
             try {
                 in.close();
                 out.close();
@@ -64,15 +149,15 @@ public class BankClient {
         }
     }
 
-    void sendMessage(final String msg) {
-        try {
-            out.writeObject(msg);
-            out.flush();
-            System.out.println("client>" + msg);
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-    }
+//    void sendMessage(final String msg) {
+//        try {
+//            out.writeObject(msg);
+//            out.flush();
+//            System.out.println("client>" + msg);
+//        } catch (IOException ioException) {
+//            ioException.printStackTrace();
+//        }
+//    }
 
     public static void main(final String args[]) {
         int port = 2004;
