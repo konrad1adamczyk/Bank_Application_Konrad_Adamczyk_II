@@ -1,8 +1,9 @@
 package com.luxoft.bankapp.tests;
 
 import com.luxoft.bankapp.ecxeptions.ClientExistsException;
-import com.luxoft.bankapp.model.*;
-import com.luxoft.bankapp.service.BankApplication;
+import com.luxoft.bankapp.model.Bank;
+import com.luxoft.bankapp.model.Client;
+import com.luxoft.bankapp.model.Gender;
 import com.luxoft.bankapp.service.BankService;
 import com.luxoft.bankapp.service.BankServiceImpl;
 
@@ -26,7 +27,7 @@ public class TestSerialization {
 
         Client client = new Client("Konradek Ad", Gender.MALE, 5432f, "konradek@gmail.com", "294-543-234", "Krakow");
 
-        Client client2 = new Client("Ania Kochana", Gender.FEMALE, 1234f, "ania@gmail.com", "294-569-234", "Krynica");
+        Client client2 = new Client("Ania Ka", Gender.FEMALE, 1234f, "ania@gmail.com", "291-569-567", "Krynica");
 
         bankService.saveClient(client);
         bankService.saveClient(client2);

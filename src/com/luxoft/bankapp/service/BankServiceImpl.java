@@ -86,18 +86,12 @@ public class BankServiceImpl implements BankService
 	@Override
 	public Client loadClient() {
 
-
-
-
 		Client client = null;
 		try (ObjectInputStream ois = new ObjectInputStream(
 				new FileInputStream(CLIENT_FILE))) {
 			client = (Client) ois.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-//		} catch (FileNotFoundException e) {
-//			System.out.println("Couldn't Find the File");
-//			System.exit(0);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
