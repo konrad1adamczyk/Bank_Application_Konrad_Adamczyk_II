@@ -17,6 +17,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Set;
 
+import static com.luxoft.bankapp.service.BankCommander.currentClient;
+
 /**
  * Created by KAdamczyk on 2016-01-04.
  */
@@ -44,18 +46,20 @@ public class BankServer {
     public String loginService(Request request) {
         try {
             loggedClient = bankService.getClient(activeBank, ((LogInRequest) request).getLogin());
-            return "You have logged into system";
+            StringBuilder sb = new StringBuilder();
+            sb.append(loggedClient.getName()).append(" you have successfully logged in to the system " +activeBank.getBankName());
+            return sb.toString();
+
         } catch (ClientNotExistsException e) {
             return e.printMessage();
         }
     }
 
-    public String getAccountService(Request request) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Account account : loggedClient.getListOfAccounts()) {
-            stringBuilder.append(account).append("\n");
-        }
-        return stringBuilder.toString();
+    public String getAccountService() {
+
+        String infoAboutClient = loggedClient.printReport2();
+
+        return infoAboutClient;
     }
 
     public String changeActiveAccountService(Request request) {
@@ -82,7 +86,7 @@ public class BankServer {
         if (request.getClass() == LogInRequest.class) {
             return loginService(request);
         } else if (request.getClass() == GetAccountsRequest.class) {
-            return getAccountService(request);
+            return getAccountService();
         } else if (request.getClass() == ChangeActiveAccountRequest.class) {
             return changeActiveAccountService(request);
         } else if (request.getClass() == DepositRequest.class) {
@@ -94,8 +98,6 @@ public class BankServer {
         }
         return "Incorrect command";
     }
-
-
 
 
     void run() {
